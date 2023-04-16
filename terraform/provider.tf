@@ -1,4 +1,8 @@
 terraform {
+  backend "gcs" {
+    bucket = "liatrio-state"
+    prefix = "state"
+  }
   required_version = ">= 0.12"
 }
 
