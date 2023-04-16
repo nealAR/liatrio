@@ -1,7 +1,7 @@
 # Compute
 
 resource "google_project_service" "project" {
-  project = var.project_id
+  project  = var.project_id
   for_each = toset(var.enable_apis)
 
   service = each.value

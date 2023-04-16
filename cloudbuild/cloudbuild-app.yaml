@@ -1,0 +1,7 @@
+
+steps:
+- id: docker build and push
+  name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'us-east1-docker.pkg.dev/liatrio-takehome1/node-repo/liatrio-takehome', '.' ]
+- name: "gcr.io/cloud-builders/docker"
+  args: ['push', 'us-east1-docker.pkg.dev/liatrio-takehome1/node-repo/liatrio-takehome']

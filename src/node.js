@@ -7,7 +7,7 @@ const timestamp = Date.now()
 app.get('/', function (req, res) {
   res.json({
     message: "Automate all the things!",
-    timestamp: timestamp
+    timestamp: Date.now(),
   });
 });
 
