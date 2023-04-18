@@ -11,7 +11,7 @@ steps:
   args:
   - '-c'
   - |
-    sed -i "" "s/ENVIRONMENT/${_ENVIRONMENT}/g" deployment.yaml
+    sed -i -e 's/ENVIRONMENT/${_ENVIRONMENT}/g' deployment.yaml "{}"
 - name: 'gcr.io/cloud-builders/kubectl'
   dir: 'src/manifest'
   args: ['apply', '-f', 'deployment.yaml']
