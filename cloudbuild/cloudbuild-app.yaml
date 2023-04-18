@@ -5,3 +5,8 @@ steps:
   args: [ 'build', '-t', 'us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome','--build-arg','ENVIRONMENT=${_ENVIRONMENT}','.' ]
 - name: "gcr.io/cloud-builders/docker"
   args: ['push', 'us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'src/manifest/*.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=liatrio-test-cluster'
