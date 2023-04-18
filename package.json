@@ -7,10 +7,10 @@
   "description": "",
   "keywords": [],
   "license": "ISC",
-  "main": "src/node.js",
+  "main": "src/app/node.js",
   "packages": {},
   "scripts": {
-    "start": "node src/node.js"
+    "start": "node src/app/node.js"
   },
   "dependencies": {
     "express": "^4.18.2"

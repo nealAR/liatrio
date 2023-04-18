@@ -4,15 +4,11 @@
 project_id = "liatrio-takehome1"
 region     = "us-east1"
 zone       = "us-east1-b"
-enable_apis = [
-  "compute.googleapis.com",
-  "container.googleapis.com",
-  "artifactregistry.googleapis.com"
-]
 
 ################################
 ## GKE 
 ################################
+gke_cluster_name       = "liatrio-test-cluster"
 gke_deployment_name    = "liatrio-deployment"
 gke_service_name       = "liatrio-service"
 gke_namespace_non_prod = "non-prod"

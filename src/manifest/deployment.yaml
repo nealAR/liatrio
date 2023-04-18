@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liatrio-deployment
+  namespace: non-prod
+  labels:
+    app: liatrio-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: liatrio-deployment
+  template:
+    metadata:
+      labels:
+        app: liatrio-deployment
+    spec:
+      containers:
+      - name: liatrio-deployment
+        image: us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: liatrio-service
+  namespace: non-prod
+spec:
+  selector:
+    app: liatrio-deployment
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

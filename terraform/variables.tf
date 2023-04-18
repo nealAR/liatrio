@@ -18,10 +18,6 @@ variable "gke_nodes" {
   description = "number of gke nodes"
 }
 
-variable "enable_apis" {
-  type = list(string)
-}
-
 variable "gke_deployment_name" {
   type = string
 }
@@ -39,5 +35,9 @@ variable "gke_namespace_non_prod" {
 }
 
 variable "gke_namespace_prod" {
+  type = string
+}
+
+variable "gke_cluster_name" {
   type = string
 }

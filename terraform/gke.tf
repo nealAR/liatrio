@@ -6,11 +6,11 @@ data "google_client_config" "current" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = "${var.project_id}-gke"
+  name     = var.gke_cluster_name
   location = var.zone
 
   remove_default_node_pool = false
-  initial_node_count       = 3
+  initial_node_count       = 1
 
   node_config {
     oauth_scopes = [
@@ -31,21 +31,9 @@ resource "google_container_cluster" "primary" {
       disable-legacy-endpoints = "true"
     }
   }
-}
 
-resource "kubernetes_cluster_role_binding" "user_role_binding" {
-  metadata {
-    name = "user-role-binding"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "cluster-admin"
-  }
-  subject {
-    kind = "User"
-    name = "neal.rodruck@gmail.com"
-  }
+  network    = google_compute_network.vpc.name
+  subnetwork = google_compute_subnetwork.subnet.name
 }
 
 resource "kubernetes_namespace" "gke_namespaces" {
@@ -56,96 +44,5 @@ resource "kubernetes_namespace" "gke_namespaces" {
 
   depends_on = [
     google_container_cluster.primary
-  ]
-}
-
-resource "kubernetes_service" "liatrio_service" {
-  for_each = toset(local.gke_namespaces)
-  metadata {
-    namespace = each.value
-    name      = "${var.gke_service_name}-${each.value}"
-  }
-  spec {
-    selector = {
-      app = "${var.gke_deployment_name}-${each.value}"
-    }
-    session_affinity = "ClientIP"
-    port {
-      protocol    = "TCP"
-      port        = 80
-      target_port = 3000
-    }
-    type = "LoadBalancer"
-    #load_balancer_ip = google_compute_address.default.address
-  }
-
-  depends_on = [
-    kubernetes_namespace.gke_namespaces
-  ]
-}
-
-resource "kubernetes_deployment" "liatrio_deployment" {
-  for_each = toset(local.gke_namespaces)
-  metadata {
-    name      = "${var.gke_deployment_name}-${each.value}"
-    namespace = each.value
-    labels = {
-      environment = each.value
-    }
-  }
-
-  spec {
-    replicas = 1
-
-    selector {
-      match_labels = {
-        app = "${var.gke_deployment_name}-${each.value}"
-      }
-    }
-
-    template {
-      metadata {
-        labels = {
-          app = "${var.gke_deployment_name}-${each.value}"
-        }
-      }
-
-      spec {
-        container {
-          image = var.image_name
-          name  = "${var.gke_deployment_name}-${each.value}"
-
-          resources {
-            limits {
-              cpu    = "128Mi"
-              memory = "128Mi"
-            }
-            requests {
-              cpu    = "250m"
-              memory = "64Mi"
-            }
-          }
-
-          liveness_probe {
-            http_get {
-              path = "/"
-              port = 3000
-
-              http_header {
-                name  = "X-Custom-Header"
-                value = "Awesome"
-              }
-            }
-
-            initial_delay_seconds = 3
-            period_seconds        = 3
-          }
-        }
-      }
-    }
-  }
-
-  depends_on = [
-    kubernetes_namespace.gke_namespaces
   ]
 }
