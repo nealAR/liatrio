@@ -8,7 +8,7 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
-  - 'c'
+  - '-c'
   - |
     sed -i "s/ENVIRONMENT/${_ENVIRONMENT}/g" src/manifest/deployment.yaml deployment.yaml
 - name: 'gcr.io/cloud-builders/kubectl'
