@@ -10,7 +10,7 @@ resource "google_container_cluster" "primary" {
   location = var.zone
 
   remove_default_node_pool = false
-  initial_node_count       = 2
+  initial_node_count       = 1
 
   node_config {
     oauth_scopes = [
