@@ -26,7 +26,7 @@ Artifact Registry is the next generation evolution of Google Cloud Platform's Co
 ## Deploying from the CLI 
 Command line deployments have been abstracted into ```make``` commands and **must be run synchronously.** 
 
-1. Deploy infrastructure: ```make infra project_id=<gcp-project-id> region=<region> zone=<zone>```
+1. Deploy infrastructure: make infra project_id=<gcp-project-id> region=<region> zone=<zone>
    - eg: ```make infra project_id=new-test-for-me region=us-central1 zone=us-central1-b```
 2. Docker build, push, and GKE manifest deployments: ```make app cluster-name=<gke-cluster-name> project_id=<gcp-project-id> region=<region> zone=<zone>```
    - eg: ```make app cluster-name=liatrio-test-cluster project_id=new-test-for-me region=us-central1 zone=us-central1-b```
@@ -40,7 +40,7 @@ Terraform remote state management is required for Cloud Build CI/CD runs. The si
 2. Click "Create Bucket".
 3. Select a name.
 4. Select the desired Region, Storage Class (Standard recommended), Access Control, Protection Tools, and Encryption Key options.
-5. In the local repository navigate to 'terraform/provider.tf' and update the ```terraform``` block with the backend con
+5. In the local repository navigate to 'terraform/provider.tf' and update the ```terraform``` block with the backend configuration:
    ```
    terraform {
       backend "gcs" {
@@ -59,8 +59,8 @@ Please follow the steps below to enable automated deployment of the Cloud Run ap
 1. Using either 'gcloud' or your GCP Project's Console enable the Cloud Build API: 
    - cloudbuild.googleapis.com
 2. Navigate to your project's Cloud Build Dashboard and click on the Settings tab. Enable the following roles for the Cloud Build service account:
-   - Cloud Run Admin
-   - Compute Engine Admin
+   - Kubernetes Enginer Developer
+   - Compute Engine Instance Admin(v1)
    - Service Accounts User
 3. From the Cloud Build Dashboard navigate to the Trigger tab and click "Connect Repository". From there follow the steps to enable authentication from your GCP Project to your SCM of choice. 
 4. In order to create a Cloud Trigger navigate back to the Trigger tab and click the "Create Trigger" button. In the form provided select your desired Trigger Name, Region, Description (optional), Repository and Branch. Under Configuration make sure the following options are selected:
@@ -69,7 +69,7 @@ Please follow the steps below to enable automated deployment of the Cloud Run ap
    - For Terraform infrastructure build:
      - Cloud Build configuration file location: cloudbuild/cloudbuild-infra.yaml
      - Included files filter (glob): terraform/**
-     - Ignored files filter (glob): src/**  
+     - Ignored files filter (glob): src/** 
    - For docker image build:
      - Cloud Build configuration file location: cloudbuild/cloudbuild-app.yaml
      - Included files filter (glob): src/**
