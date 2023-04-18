@@ -56,7 +56,7 @@ Terraform remote state management is required for Cloud Build CI/CD runs. The si
 ## Enable CI/CD: Cloud Build
 If you wish to deploy the applcation using Google's Cloud Build CI/CD tool a pipeline is provided in the root directory of this repository (cloudbuild-app.yaml & cloudbuild-infra.yaml). Once set up is complete this pipeline will provide faster, more reliable deployments increasing overall code quality and team agility through automated builds and infrastructure management. 
 
-Please follow the steps below to enable automated deployment of the Cloud Run application!
+Please follow the steps below to enable automated deployment of the GKE Node application!
 
 1. Using either 'gcloud' or your GCP Project's Console enable the Cloud Build API: 
    - cloudbuild.googleapis.com
@@ -71,14 +71,17 @@ Please follow the steps below to enable automated deployment of the Cloud Run ap
    - For Terraform infrastructure build:
      - Cloud Build configuration file location: cloudbuild/cloudbuild-infra.yaml
      - Included files filter (glob): terraform/**
-     - Ignored files filter (glob): src/** 
-   - For docker image build:
+     - Ignored files filter (glob): src/**
+   - For docker image build and GKE manifest deployment:
      - Cloud Build configuration file location: cloudbuild/cloudbuild-app.yaml
      - Included files filter (glob): src/**
      - Ignored files filter (glob): terraform/**
-     - 
+     - Navigate to Advanced > Subsitution variables and enter the following:
+       - key: _ENVIRONMENT
+       - value: non-prod | prod
 5. Hit Create
 
+PLEASE NOTE: Due to quota restrictions only one GKE cluster is deployed using any/all of the steps above. Namespaces are used to simulate prod & non-prod environments.
 
 ## Inputs
 
