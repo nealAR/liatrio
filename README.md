@@ -60,9 +60,12 @@ Please follow the steps below to enable automated deployment of the GKE Node app
 
 1. Using either 'gcloud' or your GCP Project's Console enable the Cloud Build API: 
    - cloudbuild.googleapis.com
-2. Navigate to your project's Cloud Build Dashboard and click on the Settings tab. Enable the following roles for the Cloud Build service account:
-   - Kubernetes Enginer Developer
+2. Navigate to your project's IAM Dashboard and find the "@cloudbuild.gserviceaccount.com" principal. Enable the following roles:
+   - Artifact Registry Administrator
+   - Cloud Build Service Account
    - Compute Engine Instance Admin(v1)
+   - Compute Network Admin
+   - Kubernetes Engine Admin
    - Service Accounts User
 3. From the Cloud Build Dashboard navigate to the Trigger tab and click "Connect Repository". From there follow the steps to enable authentication from your GCP Project to your SCM of choice. 
 4. In order to create a Cloud Trigger navigate back to the Trigger tab and click the "Create Trigger" button. In the form provided select your desired Trigger Name, Region, Description (optional), Repository and Branch. Under Configuration make sure the following options are selected:
@@ -81,7 +84,7 @@ Please follow the steps below to enable automated deployment of the GKE Node app
        - value: non-prod | prod
 5. Hit Create
 
-PLEASE NOTE: Due to quota restrictions only one GKE cluster is deployed using any/all of the steps above. Namespaces are used to simulate prod & non-prod environments.
+PLEASE NOTE: Due to quota restrictions only one GKE cluster is deployed using any/all of the steps above. Namespaces are used to simulate prod & non-prod environments. Automated deployment to those namespaces is specified by the "_ENVIRONMENT" variable in the Cloud Build trigger or the "environment=<value>" input param of the ```make app``` command. 
 
 ## Inputs
 
