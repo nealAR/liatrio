@@ -5,8 +5,11 @@ steps:
   args: [ 'build', '-t', 'us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome','--build-arg','ENVIRONMENT=${_ENVIRONMENT}','.' ]
 - name: "gcr.io/cloud-builders/docker"
   args: ['push', 'us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome']
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args: ['-c','sed','-i','s/ENVIRONMENT/${_ENVIRONMENT}/g','src/manifest/deployment.yaml','deployment.yaml']
 - name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'src/manifest/*.yaml']
+  args: ['apply', '-f', 'deployment.yaml']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=liatrio-test-cluster'
