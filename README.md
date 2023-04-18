@@ -26,9 +26,11 @@ Artifact Registry is the next generation evolution of Google Cloud Platform's Co
 ## Deploying from the CLI 
 Command line deployments have been abstracted into ```make``` commands and **must be run synchronously.** 
 
-1. Deploy infrastructure: ```make infra project_id=<gcp-project-id> region=<region> zone=<zone>```
+1. Deploy infrastructure: 
+   ```make infra project_id=<gcp-project-id> region=<region> zone=<zone>```
 
-2. Docker build, push, and GKE manifest deployments: ```make app cluster-name=<gke-cluster-name> project_id=<gcp-project-id> region=<region> zone=<zone>```
+2. Docker build, push, and GKE manifest deployments: 
+   ```make app cluster-name=<gke-cluster-name> project_id=<gcp-project-id> region=<region> zone=<zone>```
 
 Please [this](https://cloud.google.com/compute/docs/regions-zones#identifying_a_region_or_zone) link for more GCP region/zone infromation 
 
