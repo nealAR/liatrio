@@ -76,6 +76,7 @@ Please follow the steps below to enable automated deployment of the Cloud Run ap
      - Cloud Build configuration file location: cloudbuild/cloudbuild-app.yaml
      - Included files filter (glob): src/**
      - Ignored files filter (glob): terraform/**
+     - 
 5. Hit Create
 
 
