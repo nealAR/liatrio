@@ -14,6 +14,7 @@ steps:
     sed -i "s/ENVIRONMENT/${_ENVIRONMENT}/g" deployment.yaml deployment-final.yaml
     cat deployment-final.yaml
 - name: 'gcr.io/cloud-builders/kubectl'
+  dir: 'src/manifest'
   args: ['apply', '-f', 'deployment-final.yaml']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
