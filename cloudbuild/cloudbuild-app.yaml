@@ -11,11 +11,10 @@ steps:
   args:
   - '-c'
   - |
-    sed -i "s/ENVIRONMENT/${_ENVIRONMENT}/g" deployment.yaml deployment-final.yaml
-    cat deployment-final.yaml
+    sed -i "" "s/ENVIRONMENT/${_ENVIRONMENT}/g" deployment.yaml
 - name: 'gcr.io/cloud-builders/kubectl'
   dir: 'src/manifest'
-  args: ['apply', '-f', 'deployment-final.yaml']
+  args: ['apply', '-f', 'deployment.yaml']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=liatrio-test-cluster'
