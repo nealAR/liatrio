@@ -30,7 +30,8 @@ Command line deployments have been abstracted into ```make``` commands and **mus
    ```make infra project_id=<gcp-project-id> region=<region> zone=<zone>```
 
 2. Docker build, push, and GKE manifest deployments: 
-   ```make app cluster-name=<gke-cluster-name> project_id=<gcp-project-id> region=<region> zone=<zone>```
+   ```make app cluster-name=<gke-cluster-name> project_id=<gcp-project-id> region=<region> zone=<zone> environment=<non-prod|prod>```
+   - PLEASE NOTE: If you are running a windows machine please delete line 10 in the ```makefile``` and manually update the "namespace" value on line 5 of ```src/manifest/deployment.yaml``` to either "non-prod" or "prod"
 
 Please [this](https://cloud.google.com/compute/docs/regions-zones#identifying_a_region_or_zone) link for more GCP region/zone infromation 
 
