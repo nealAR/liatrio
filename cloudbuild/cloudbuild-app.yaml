@@ -7,12 +7,13 @@ steps:
   args: ['push', 'us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome']
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
+  dir: 'src/manifest'
   args:
   - '-c'
   - |
-    sed -i "s/ENVIRONMENT/${_ENVIRONMENT}/g" src/manifest/deployment.yaml deployment.yaml
+    sed -i "s/ENVIRONMENT/${_ENVIRONMENT}/g" deployment.yaml deployment-final.yaml
 - name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'deployment.yaml']
+  args: ['apply', '-f', 'deployment-final.yaml']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=liatrio-test-cluster'
