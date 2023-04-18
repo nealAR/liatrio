@@ -1,7 +1,7 @@
 ################################
 ## GCP 
 ################################
-project_id = "liatrio-takehome1"
+project_id = "liatrio-automation"
 region     = "us-east1"
 zone       = "us-east1-b"
 
