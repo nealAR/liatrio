@@ -22,15 +22,16 @@ Artifact Registry is the next generation evolution of Google Cloud Platform's Co
    - Cloud Resource Manager: cloudresourcemanager.googleapis.com
    - Compute Engine: compute.googleapis.com
    - Kubernetes Engine: container.googleapis.com
+4. A GCP user account with Owner or equivalent privileges in the specified Project
 
 ## Deploying from the CLI 
 Command line deployments have been abstracted into ```make``` commands and **must be run synchronously.** 
 
 1. Deploy infrastructure: 
-   ```make infra project_id=<gcp-project-id> region=<region> zone=<zone>```
+   ```make infra project_id=<gcp-project-id>```
 
 2. Docker build, push, and GKE manifest deployments: 
-   ```make app cluster-name=<gke-cluster-name> project_id=<gcp-project-id> region=<region> zone=<zone> environment=<non-prod|prod>```
+   ```make app project_id=<gcp-project-id> environment=<non-prod|prod>```
    - PLEASE NOTE: If you are running a windows machine please delete line 10 in the ```makefile``` and manually update the "namespace" value on line 5 of ```src/manifest/deployment.yaml``` to either "non-prod" or "prod"
 
 Please [this](https://cloud.google.com/compute/docs/regions-zones#identifying_a_region_or_zone) link for more GCP region/zone infromation 
