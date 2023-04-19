@@ -9,7 +9,8 @@ app.get('/', function (req, res) {
   res.json({
     message: "Automate all the things!",
     timestamp: Date.now(),
-    environment: environment
+    environment: environment,
+    "hello": "from the demo"
   });
 });
 
