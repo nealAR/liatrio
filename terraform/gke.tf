@@ -5,12 +5,27 @@ locals {
 data "google_client_config" "current" {
 }
 
+resource "kubernetes_cluster_role_binding" "user_role_binding" {
+  metadata {
+    name = "user-role-binding"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+  subject {
+    kind = "User"
+    name = "neal.rodruck@gmail.com"
+  }
+}
+
 resource "google_container_cluster" "primary" {
   name     = var.gke_cluster_name
   location = var.zone
 
   remove_default_node_pool = false
-  initial_node_count       = 1
+  initial_node_count       = 2
 
   node_config {
     oauth_scopes = [
