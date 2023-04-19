@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: liatrio-deployment
-        image: us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome
+        image: us-east1-docker.pkg.dev/liatrio-automation/node-repo/liatrio-takehome:latest
         ports:
         - containerPort: 3000
 ---
